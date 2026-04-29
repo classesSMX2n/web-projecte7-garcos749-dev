@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FoodLogistic S.A. és líder en distribució i logística alimentària a nivell nacional amb seu a Mataró.">
+    <title>FoodLogistic S.A. — Logística Alimentària Premium</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Banner de cookies ── */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: rgba(5, 10, 7, 0.97);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(34,197,94,0.25);
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #cookie-banner.visible { transform: translateY(0); }
+        #cookie-banner.hiding { transform: translateY(100%); }
+        .cookie-text { flex: 1; min-width: 260px; }
+        .cookie-text p { color: #94a3b8; font-size: 0.875rem; line-height: 1.6; margin: 0; }
+        .cookie-text p strong { color: #f1f5f9; }
+        .cookie-text a { color: #22c55e; text-decoration: none; }
+        .cookie-text a:hover { text-decoration: underline; }
+        .cookie-icon { width: 40px; height: 40px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.25rem; }
+        .cookie-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; flex-shrink: 0; }
+        .cookie-btn { padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; font-family: inherit; white-space: nowrap; }
+        .cookie-btn--accept { background: #22c55e; color: #000; }
+        .cookie-btn--accept:hover { background: #16a34a; transform: translateY(-1px); }
+        .cookie-btn--reject { background: transparent; color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
+        .cookie-btn--reject:hover { color: #f1f5f9; border-color: rgba(255,255,255,0.25); }
+        .cookie-btn--settings { background: transparent; color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+        .cookie-btn--settings:hover { background: rgba(34,197,94,0.08); }
+
+        /* ── Serveis 6-card grid (3 col) ── */
+        .serveis-grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 1024px) { .serveis-grid-6 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px)  { .serveis-grid-6 { grid-template-columns: 1fr; } }
+
+        .servei-img {
+            margin-top: 1.25rem;
+            border-radius: 10px;
+            height: 150px;
+            object-fit: cover;
+            width: 100%;
+            opacity: 0.85;
+            transition: opacity 0.35s;
+        }
+        .servei-card:hover .servei-img { opacity: 1; }
+
+        /* ── Checkboxes formulari ── */
+        .form-consents { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 0.25rem; }
+        .consent-item { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+        .consent-item input[type="checkbox"] {
+            appearance: none; -webkit-appearance: none;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 5px; background: transparent;
+            flex-shrink: 0; margin-top: 2px; cursor: pointer;
+            transition: all 0.2s; position: relative;
+        }
+        .consent-item input[type="checkbox"]:checked { background: #22c55e; border-color: #22c55e; }
+        .consent-item input[type="checkbox"]:checked::after {
+            content: ''; position: absolute; left: 3px; top: 1px;
+            width: 8px; height: 5px;
+            border-left: 2px solid #000; border-bottom: 2px solid #000;
+            transform: rotate(-45deg);
+        }
+        .consent-item input[type="checkbox"]:focus { outline: 2px solid rgba(34,197,94,0.5); outline-offset: 2px; }
+        .consent-label { font-size: 0.82rem; color: #94a3b8; line-height: 1.55; }
+        .consent-label a { color: #22c55e; text-decoration: none; }
+        .consent-label a:hover { text-decoration: underline; }
+        .consent-label .required-star { color: #ef4444; margin-left: 2px; }
+
+        /* ── Sobre nosaltres: valors ── */
+        .sobre-values { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .sobre-value-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; color: #d1d5db; }
+        .sobre-value-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+
+        /* ── Formulari contacte: missatge d'èxit ── */
+        .form-success-msg {
+            display: none; text-align: center; padding: 2rem;
+        }
+        .form-success-msg .checkmark { font-size: 3rem; }
+        .form-success-msg h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; margin-top: 0.75rem; color: #f1f5f9; }
+        .form-success-msg p { color: #94a3b8; margin-top: 0.5rem; }
+
+        /* ── Footer legal links ── */
+        .footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+        .footer-legal a { color: #64748b; font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+        .footer-legal a:hover { color: #22c55e; }
+    </style>
+</head>
+<body>
+
+    <!-- ══ BANNER DE COOKIES ══ -->
+    <div id="cookie-banner" role="dialog" aria-label="Avís de cookies" aria-live="polite">
+        <div class="cookie-icon">🍪</div>
+        <div class="cookie-text">
+            <p>
+                <strong>Utilitzem cookies</strong> per millorar la teva experiència. Les cookies tècniques són necessàries per al funcionament del lloc. Les analítiques ens ajuden a entendre com uses la web.
+                Consulta la nostra <a href="politica-cookies.html">Política de Cookies</a> i la <a href="politica-privacitat.html">Política de Privacitat</a>.
+            </p>
+        </div>
+        <div class="cookie-actions">
+            <button class="cookie-btn cookie-btn--reject" onclick="cookieChoice('reject')">Rebutjar opcionals</button>
+            <a href="politica-cookies.html" class="cookie-btn cookie-btn--settings">Configurar</a>
+            <button class="cookie-btn cookie-btn--accept" onclick="cookieChoice('accept')">Acceptar totes</button>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div class="page-loader" id="loader">
+        <div class="loader-content">
+            <svg class="loader-logo" viewBox="0 0 60 60" width="60" height="60">
+                <circle cx="30" cy="30" r="28" stroke="#22c55e" stroke-width="2" fill="none" stroke-dasharray="176" stroke-dashoffset="176" class="loader-circle"/>
+                <path d="M20 30 L28 38 L42 22" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="loader-check" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Navegació -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <a href="#inici" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" width="40" height="40">
+                        <rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+                        <path d="M12 20 L20 28 L30 14" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-name">FoodLogistic</span>
+                    <span class="logo-suffix">S.A.</span>
+                </div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inici" class="nav-link active">Inici</a></li>
+                <li><a href="#serveis" class="nav-link">Serveis</a></li>
+                <li><a href="#sobre-nosaltres" class="nav-link">Sobre nosaltres</a></li>
+                <li><a href="#contacte" class="nav-link nav-link--cta">Contacte</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Obrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="inici" class="hero">
+        <div class="hero-bg-grid"></div>
+        <div class="hero-glow hero-glow--1"></div>
+        <div class="hero-glow hero-glow--2"></div>
+        <div class="hero-content">
+            <div class="hero-badge reveal">
+                <span class="badge-dot"></span>
+                Líders en logística alimentària
+            </div>
+            <h1 class="hero-title reveal">
+                La cadena de fred<br>
+                <span class="gradient-text">que mai s'atura.</span>
+            </h1>
+            <p class="hero-subtitle reveal">
+                FoodLogistic S.A. garanteix la distribució i logística alimentària amb la màxima seguretat, traçabilitat i puntualitat des de Mataró a tot el territori nacional.
+            </p>
+            <div class="hero-actions reveal">
+                <a href="#contacte" class="btn btn--primary">
+                    Sol·licita pressupost
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="#serveis" class="btn btn--ghost">
+                    Descobreix els serveis
+                </a>
+            </div>
+            <div class="hero-metrics reveal">
+                <div class="metric">
+                    <span class="metric-value" data-count="200">0</span><span class="metric-plus">+</span>
+                    <span class="metric-label">Clients actius</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value" data-count="98">0</span><span class="metric-plus">%</span>
+                    <span class="metric-label">Puntualitat</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value" data-count="15">0</span><span class="metric-plus">+</span>
+                    <span class="metric-label">Anys d'experiència</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric">
+                    <span class="metric-value" data-count="350">0</span><span class="metric-plus">+</span>
+                    <span class="metric-label">Professionals</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#serveis" class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Marquesina de clients -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>Mercadona</span><span class="marquee-dot">·</span>
+            <span>Bon Preu</span><span class="marquee-dot">·</span>
+            <span>Ametller Origen</span><span class="marquee-dot">·</span>
+            <span>Caprabo</span><span class="marquee-dot">·</span>
+            <span>Condis</span><span class="marquee-dot">·</span>
+            <span>Lidl</span><span class="marquee-dot">·</span>
+            <span>Aldi</span><span class="marquee-dot">·</span>
+            <span>El Corte Inglés</span><span class="marquee-dot">·</span>
+            <span>Mercadona</span><span class="marquee-dot">·</span>
+            <span>Bon Preu</span><span class="marquee-dot">·</span>
+            <span>Ametller Origen</span><span class="marquee-dot">·</span>
+            <span>Caprabo</span><span class="marquee-dot">·</span>
+            <span>Condis</span><span class="marquee-dot">·</span>
+            <span>Lidl</span><span class="marquee-dot">·</span>
+            <span>Aldi</span><span class="marquee-dot">·</span>
+            <span>El Corte Inglés</span><span class="marquee-dot">·</span>
+        </div>
+    </div>
+
+    <!-- Serveis -->
+    <section id="serveis" class="section serveis">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Serveis</span>
+                <h2 class="section-title">Solucions logístiques<br><span class="gradient-text">integrals i eficients.</span></h2>
+                <p class="section-desc">Des de la recollida fins al punt de venda, cobrim tota la cadena alimentària amb tecnologia puntera i equip especialitzat.</p>
+            </div>
+            <div class="serveis-grid-6">
+                <div class="servei-card reveal" data-delay="0">
+                    <div class="servei-number">01</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="14" width="28" height="22" rx="3"/>
+                            <path d="M32 20h8l4 8v8h-12"/>
+                            <circle cx="14" cy="38" r="3"/><circle cx="38" cy="38" r="3"/>
+                            <path d="M8 22h12M8 28h8"/>
+                        </svg>
+                    </div>
+                    <h3>Transport refrigerat</h3>
+                    <p>Flota de +80 vehicles amb control de temperatura GPS en temps real. Garantim la cadena de fred des de l'origen fins al destí amb certificació ATP.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1519668752166-ebdbfe986248?w=600&q=75" alt="Camió de transport frigorífic en carretera" loading="lazy">
+                </div>
+                <div class="servei-card reveal" data-delay="100">
+                    <div class="servei-number">02</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 40V16l18-10 18 10v24"/>
+                            <rect x="14" y="24" width="20" height="16" rx="2"/>
+                            <path d="M14 32h20M24 24v16"/>
+                        </svg>
+                    </div>
+                    <h3>Emmagatzematge i cross-docking</h3>
+                    <p>12.000 m² de magatzems amb zones diferenciades: congelació (-25°C), refrigeració (0-4°C) i temperatura ambient amb sistemes IoT de monitorització.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=75" alt="Interior d'un magatzem logístic modern" loading="lazy">
+                </div>
+                <div class="servei-card reveal" data-delay="200">
+                    <div class="servei-number">03</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="24" cy="24" r="20"/>
+                            <path d="M24 4a28 28 0 0 1 0 40M24 4a28 28 0 0 0 0 40"/>
+                            <path d="M4 24h40M6 14h36M6 34h36"/>
+                        </svg>
+                    </div>
+                    <h3>Última milla alimentària</h3>
+                    <p>Lliurament àgil a supermercats, restaurants i comerços locals amb rutes optimitzades per IA per reduir temps i emissions de CO₂.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&q=75" alt="Repartidor lliurant caixetes de productes frescos" loading="lazy">
+                </div>
+                <div class="servei-card reveal" data-delay="300">
+                    <div class="servei-number">04</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 36l10-10 8 8 12-16 10 10"/>
+                            <circle cx="40" cy="12" r="5"/>
+                            <path d="M4 44h40"/>
+                        </svg>
+                    </div>
+                    <h3>Traçabilitat i IT logística</h3>
+                    <p>Plataforma digital pròpia amb traçabilitat en temps real, analítica predictiva, alertes HACCP i dashboard personalitzat per a cada client.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=75" alt="Dashboard de monitoratge logístic en pantalles" loading="lazy">
+                </div>
+                <div class="servei-card reveal" data-delay="400">
+                    <div class="servei-number">05</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4"/>
+                            <path d="M24 12v12l8 4"/>
+                            <path d="M10 34l4-4M38 34l-4-4"/>
+                        </svg>
+                    </div>
+                    <h3>Logística sostenible</h3>
+                    <p>Vehicles elèctrics i de gas natural, embalatges reciclats i compensació de la petjada de carboni per a clients que prioritzen la sostenibilitat.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=75" alt="Verdures fresques il·luminades de manera natural" loading="lazy">
+                </div>
+                <div class="servei-card reveal" data-delay="500">
+                    <div class="servei-number">06</div>
+                    <div class="servei-icon-wrap">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M24 4l-4 8H8l7 6-3 9 12-8 12 8-3-9 7-6H28z"/>
+                            <path d="M24 36v8M16 44h16"/>
+                        </svg>
+                    </div>
+                    <h3>Gestió de riscos i continuïtat</h3>
+                    <p>Plans de contingència, assegurances específiques de càrrega alimentària i protocols de gestió de crisis per assegurar la continuïtat del negoci.</p>
+                    <a href="#contacte" class="servei-link">Més informació <span>&rarr;</span></a>
+                    <img class="servei-img" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=75" alt="Persona revisant documentació de logística" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre nosaltres -->
+    <section id="sobre-nosaltres" class="section sobre">
+        <div class="container">
+            <div class="sobre-grid">
+                <div class="sobre-visual reveal">
+                    <div class="sobre-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop&q=80" alt="Centre logístic FoodLogistic" loading="lazy">
+                        <div class="sobre-img-overlay"></div>
+                    </div>
+                    <div class="sobre-floating-card">
+                        <div class="floating-card-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div>
+                            <strong>Certificació ISO 22000</strong>
+                            <span>Seguretat alimentària</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sobre-text">
+                    <span class="section-tag reveal">Sobre nosaltres</span>
+                    <h2 class="section-title reveal">Nascuda a Mataró,<br><span class="gradient-text">connectada amb tot el país.</span></h2>
+                    <p class="reveal">Fundada l'any 2010, <strong style="color:#f1f5f9">FoodLogistic S.A.</strong> ha crescut fins a convertir-se en una de les empreses de referència en la distribució de productes alimentaris a Espanya. Amb la nostra seu central a Mataró i plataformes operatives a Barcelona, Tarragona, Girona i Lleida, donem cobertura a tot el territori nacional.</p>
+                    <p class="reveal">Arran de l'obertura de noves rutes i la contractació de més personal, el volum d'operacions s'ha multiplicat. La nostra infraestructura tecnològica de darrera generació garanteix la seguretat i la continuïtat del negoci en tot moment.</p>
+                    <div class="sobre-features reveal">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div>
+                                <strong>Cadena de fred garantida</strong>
+                                <span>Monitorització 24/7 amb alertes en temps real</span>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            </div>
+                            <div>
+                                <strong>Traçabilitat total</strong>
+                                <span>Seguiment de cada producte des de l'origen</span>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            </div>
+                            <div>
+                                <strong>Atenció personalitzada</strong>
+                                <span>Gestor de compte dedicat per cada client</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sobre-values reveal">
+                        <div class="sobre-value-item"><span class="sobre-value-dot"></span>Compromís amb la seguretat alimentària i la traçabilitat</div>
+                        <div class="sobre-value-item"><span class="sobre-value-dot"></span>Innovació tecnològica constant aplicada a la logística</div>
+                        <div class="sobre-value-item"><span class="sobre-value-dot"></span>Sostenibilitat i reducció d'emissions com a prioritat estratègica</div>
+                        <div class="sobre-value-item"><span class="sobre-value-dot"></span>Equip de +350 professionals qualificats i compromesos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Xifres -->
+    <section class="section stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <span class="stat-value" data-count="200">0</span><span class="stat-suffix">+</span>
+                    <span class="stat-label">Clients satisfets</span>
+                </div>
+                <div class="stat-card reveal" data-delay="100">
+                    <span class="stat-value" data-count="12000">0</span><span class="stat-suffix">m²</span>
+                    <span class="stat-label">Superfície logística</span>
+                </div>
+                <div class="stat-card reveal" data-delay="200">
+                    <span class="stat-value" data-count="80">0</span><span class="stat-suffix">+</span>
+                    <span class="stat-label">Vehicles propis</span>
+                </div>
+                <div class="stat-card reveal" data-delay="300">
+                    <span class="stat-value" data-count="98">0</span><span class="stat-suffix">%</span>
+                    <span class="stat-label">Lliuraments a temps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacte -->
+    <section id="contacte" class="section contacte">
+        <div class="container">
+            <div class="contacte-grid">
+                <div class="contacte-left">
+                    <span class="section-tag reveal">Contacte</span>
+                    <h2 class="section-title reveal">Parlem del teu<br><span class="gradient-text">projecte logístic.</span></h2>
+                    <p class="reveal">Omple el formulari i el nostre equip es posarà en contacte amb tu en menys de 24 hores amb una proposta personalitzada.</p>
+                    <div class="contacte-cards reveal">
+                        <div class="info-card">
+                            <div class="info-card-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div>
+                                <strong>Oficina central</strong>
+                                <span>Carrer de la Indústria, 42<br>08301 Mataró, Barcelona</span>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </div>
+                            <div>
+                                <strong>Telèfon</strong>
+                                <span>+34 937 123 456</span>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div>
+                                <strong>Correu</strong>
+                                <span>info@foodlogistic.cat</span>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div>
+                                <strong>Horari d'atenció</strong>
+                                <span>Dilluns – Divendres: 8:00 – 18:00 h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contacte-right reveal">
+                    <!-- Missatge d'èxit -->
+                    <div id="form-success" class="form-success-msg" aria-live="polite">
+                        <div class="checkmark">✅</div>
+                        <h3>Missatge enviat!</h3>
+                        <p>Gràcies per contactar-nos. Ens posarem en contacte amb tu en menys de 24 hores.</p>
+                    </div>
+                    <!-- Formulari -->
+                    <form class="contact-form" id="contactForm" novalidate aria-label="Formulari de contacte client">
+                        <div class="form-row form-row--2">
+                            <div class="form-group">
+                                <label for="nom">Nom complet</label>
+                                <input type="text" id="nom" name="nom" placeholder="Anna García López" required autocomplete="name" aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correu electrònic</label>
+                                <input type="email" id="email" name="email" placeholder="nom@empresa.com" required autocomplete="email" aria-required="true">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefon">Telèfon de contacte</label>
+                            <input type="tel" id="telefon" name="telefon" placeholder="+34 600 000 000" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label for="missatge">Missatge</label>
+                            <textarea id="missatge" name="missatge" rows="5" placeholder="Explica'ns les necessitats del teu negoci..." required aria-required="true"></textarea>
+                        </div>
+
+                        <!-- ══ CONSENTIMENTS ══ -->
+                        <div class="form-consents">
+                            <label class="consent-item">
+                                <input type="checkbox" id="consent-data" name="consent_data" required>
+                                <span class="consent-label">
+                                    He llegit i accepto la <a href="politica-privacitat.html" target="_blank">Política de Privacitat</a> i autoritzo el tractament de les meves dades personals per gestionar la meva consulta.<span class="required-star">*</span>
+                                </span>
+                            </label>
+                            <label class="consent-item">
+                                <input type="checkbox" id="consent-marketing" name="consent_marketing">
+                                <span class="consent-label">
+                                    Accepto rebre comunicacions comercials, novetats i ofertes de FoodLogistic S.A. Pots revocar aquest consentiment en qualsevol moment. Consulta l'<a href="avis-legal.html" target="_blank">Avís Legal</a>.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--full">
+                            Enviar missatge
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#inici" class="logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 40 40" width="36" height="36">
+                                <rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+                                <path d="M12 20 L20 28 L30 14" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-name">FoodLogistic</span>
+                            <span class="logo-suffix">S.A.</span>
+                        </div>
+                    </a>
+                    <p class="footer-desc">Logística alimentària de confiança amb tecnologia de punta i compromís amb la sostenibilitat. Operant des de Mataró des del 2010.</p>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="#sobre-nosaltres">Sobre nosaltres</a></li>
+                        <li><a href="#serveis">Serveis</a></li>
+                        <li><a href="#contacte">Contacte</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Serveis</h4>
+                    <ul>
+                        <li><a href="#serveis">Transport refrigerat</a></li>
+                        <li><a href="#serveis">Emmagatzematge</a></li>
+                        <li><a href="#serveis">Última milla</a></li>
+                        <li><a href="#serveis">Traçabilitat IT</a></li>
+                        <li><a href="#serveis">Logística sostenible</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Horari</h4>
+                    <ul>
+                        <li>Dl - Dv: 8:00 - 18:00</li>
+                        <li>Ds: 9:00 - 14:00</li>
+                        <li>Dg: Tancat</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodLogistic S.A. Tots els drets reservats.</p>
+                <div class="footer-legal">
+                    <a href="avis-legal.html">Avís Legal</a>
+                    <a href="politica-privacitat.html">Política de Privacitat</a>
+                    <a href="politica-cookies.html">Política de Cookies</a>
+                </div>
+                <div class="footer-socials">
+                    <a href="#" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter / X">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ══ BANNER DE COOKIES ══
+        (function() {
+            const banner = document.getElementById('cookie-banner');
+            const STORAGE_KEY = 'fl_cookie_consent';
+            function hideBanner() {
+                banner.classList.add('hiding');
+                setTimeout(() => { banner.style.display = 'none'; }, 500);
+            }
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTimeout(() => { banner.classList.add('visible'); }, 1200);
+            }
+            window.cookieChoice = function(choice) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({ choice, ts: Date.now() }));
+                hideBanner();
+            };
+        })();
+
+        // ══ FORMULARI DE CONTACTE ══
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('form-success');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const consentData = document.getElementById('consent-data');
+
+            // Validar checkbox obligatori
+            if (!consentData.checked) {
+                consentData.focus();
+                consentData.style.borderColor = '#ef4444';
+                if (!consentData.closest('.consent-item').querySelector('.consent-error')) {
+                    const err = document.createElement('span');
+                    err.className = 'consent-error';
+                    err.style.cssText = 'color:#ef4444;font-size:0.78rem;display:block;margin-top:0.35rem;margin-left:1.65rem;';
+                    err.textContent = "Has d'acceptar la política de privacitat per continuar.";
+                    consentData.closest('.consent-item').appendChild(err);
+                }
+                return;
+            }
+
+            // Mostrar missatge d'èxit
+            contactForm.style.display = 'none';
+            formSuccess.style.display = 'block';
+        });
+
+        document.getElementById('consent-data').addEventListener('change', function() {
+            this.style.borderColor = '';
+            const err = this.closest('.consent-item').querySelector('.consent-error');
+            if (err) err.remove();
+        });
+    </script>
+</body>
+</html>

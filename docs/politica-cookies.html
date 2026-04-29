@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Cookies — FoodLogistic S.A.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --green: #22c55e;
+            --bg: #030712;
+            --bg-2: #0f172a;
+            --bg-3: #111a16;
+            --border: rgba(255,255,255,0.08);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --font: 'Inter', sans-serif;
+        }
+        body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.7; }
+
+        .header { position: sticky; top: 0; z-index: 100; background: rgba(3,7,18,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .navbar { max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 70px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); }
+        .logo-suffix { font-size: 0.65rem; color: var(--green); font-weight: 600; letter-spacing: 0.1em; }
+        .back-btn { display: flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+        .back-btn:hover { color: var(--green); }
+        .back-btn svg { transition: transform 0.2s; }
+        .back-btn:hover svg { transform: translateX(-3px); }
+
+        .legal-hero { padding: 5rem 2rem 3rem; max-width: 860px; margin: 0 auto; }
+        .legal-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: var(--green); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 1.5rem; }
+        .legal-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+        .legal-title span { color: var(--green); }
+        .legal-meta { color: var(--text-muted); font-size: 0.875rem; }
+
+        .legal-content { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+        .legal-section { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; margin-bottom: 1.5rem; transition: border-color 0.3s; }
+        .legal-section:hover { border-color: rgba(34,197,94,0.2); }
+        .legal-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
+        .section-num { width: 28px; height: 28px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--green); flex-shrink: 0; }
+        .legal-section p { color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem; }
+        .legal-section p:last-child { margin-bottom: 0; }
+        .legal-section ul { list-style: none; padding: 0; }
+        .legal-section ul li { color: var(--text-muted); font-size: 0.95rem; padding: 0.4rem 0 0.4rem 1.5rem; position: relative; }
+        .legal-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 0.8rem; top: 0.45rem; }
+        strong { color: var(--text); }
+        a { color: var(--green); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { font-family: monospace; background: rgba(34,197,94,0.1); color: var(--green); padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; }
+
+        /* Taula de cookies */
+        .cookies-table-wrap { overflow-x: auto; margin-top: 1.25rem; border-radius: 12px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        thead { background: rgba(34,197,94,0.08); }
+        th { padding: 0.8rem 1rem; text-align: left; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+        td { padding: 0.8rem 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(34,197,94,0.03); }
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+        .badge--tec { background: rgba(34,197,94,0.1); color: var(--green); }
+        .badge--ana { background: rgba(6,182,212,0.1); color: #06b6d4; }
+
+        /* Gestor de preferències */
+        .prefs-panel { background: var(--bg-3); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-top: 1.5rem; }
+        .prefs-panel h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text); font-size: 1.05rem; font-weight: 700; margin-bottom: 1.25rem; }
+        .pref-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        .pref-item:last-of-type { border-bottom: none; }
+        .pref-info h4 { font-family: 'Space Grotesk', sans-serif; color: var(--text); font-size: 0.92rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .pref-info p { color: var(--text-muted); font-size: 0.83rem; margin: 0; }
+        .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; margin-top: 2px; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; inset: 0; background: rgba(255,255,255,0.1); border-radius: 999px; cursor: pointer; transition: 0.3s; border: 1px solid var(--border); }
+        .slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 2px; bottom: 2px; background: #fff; border-radius: 50%; transition: 0.3s; }
+        input:checked + .slider { background: var(--green); border-color: var(--green); }
+        input:checked + .slider::before { transform: translateX(20px); }
+        input:disabled + .slider { opacity: 0.4; cursor: not-allowed; }
+        .prefs-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .btn-pref { padding: 0.65rem 1.4rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .btn-pref--accept { background: var(--green); color: #000; }
+        .btn-pref--accept:hover { background: #16a34a; transform: translateY(-1px); }
+        .btn-pref--save { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+        .btn-pref--save:hover { background: rgba(34,197,94,0.2); }
+        .btn-pref--reject { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+        .btn-pref--reject:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+
+        /* Footer */
+        .footer { border-top: 1px solid var(--border); padding: 2rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-legal a { color: var(--text-muted); transition: color 0.2s; }
+        .footer-legal a:hover { color: var(--green); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 40 40" width="36" height="36">
+                    <rect x="2" y="2" width="36" height="36" rx="8" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+                    <path d="M12 20 L20 28 L30 14" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="logo-text">
+                    <span class="logo-name">FoodLogistic</span>
+                    <span class="logo-suffix">S.A.</span>
+                </div>
+            </a>
+            <a href="index.html" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Tornar a l'inici
+            </a>
+        </nav>
+    </header>
+
+    <div class="legal-hero">
+        <div class="legal-tag">Privacitat web</div>
+        <h1 class="legal-title">Política de <span>Cookies</span></h1>
+        <p class="legal-meta">Última actualització: abril de 2026 · Conforme a la LSSICE i les directrius de l'AEPD</p>
+    </div>
+
+    <div class="legal-content">
+
+        <div class="legal-section">
+            <h2><span class="section-num">01</span> Què és una cookie?</h2>
+            <p>Una <strong>cookie</strong> és un fitxer de text petit que un lloc web emmagatzema al vostre dispositiu quan el visiteu. Permeten que el lloc recordi les vostres accions i preferències (idioma, mida de lletra, altres preferències de visualització), de manera que no hàgiu de tornar a introduir-les cada vegada que navegueu o aneu d'una pàgina a una altra.</p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">02</span> Cookies que utilitza aquest lloc web</h2>
+            <p>A continuació es detallen totes les cookies que pot instal·lar aquest lloc web:</p>
+            <div class="cookies-table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Nom</th><th>Tipus</th><th>Proveïdor</th><th>Finalitat</th><th>Durada</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>fl_cookie_consent</code></td>
+                            <td><span class="badge badge--tec">Tècnica</span></td>
+                            <td>FoodLogistic</td>
+                            <td>Desa les preferències de consentiment de cookies de l'usuari.</td>
+                            <td>12 mesos</td>
+                        </tr>
+                        <tr>
+                            <td><code>PHPSESSID</code></td>
+                            <td><span class="badge badge--tec">Tècnica</span></td>
+                            <td>FoodLogistic</td>
+                            <td>Manté la sessió de l'usuari activa mentre navega pel lloc web.</td>
+                            <td>Sessió</td>
+                        </tr>
+                        <tr>
+                            <td><code>sc_project</code></td>
+                            <td><span class="badge badge--ana">Analítica</span></td>
+                            <td>Statcounter</td>
+                            <td>Identifica el projecte Statcounter per a la mesura d'audiència.</td>
+                            <td>12 mesos</td>
+                        </tr>
+                        <tr>
+                            <td><code>_sc_v</code></td>
+                            <td><span class="badge badge--ana">Analítica</span></td>
+                            <td>Statcounter</td>
+                            <td>Distingeix visitants únics i mesura el comportament de navegació.</td>
+                            <td>12 mesos</td>
+                        </tr>
+                        <tr>
+                            <td><code>_gid</code></td>
+                            <td><span class="badge badge--ana">Analítica</span></td>
+                            <td>Google Analytics</td>
+                            <td>Distingeix usuaris únics per a estadístiques d'ús del lloc.</td>
+                            <td>24 hores</td>
+                        </tr>
+                        <tr>
+                            <td><code>_ga</code></td>
+                            <td><span class="badge badge--ana">Analítica</span></td>
+                            <td>Google Analytics</td>
+                            <td>Calcula estadístiques de visites i trànsit al lloc web.</td>
+                            <td>2 anys</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">03</span> Base legal</h2>
+            <p><strong>Cookies tècniques:</strong> No requereixen consentiment perquè són estrictament necessàries per al funcionament del lloc web (art. 22.2 LSSICE).</p>
+            <p><strong>Cookies analítiques:</strong> Es basen en el consentiment de l'usuari (art. 6.1.a RGPD). No s'instal·laran fins que l'usuari les accepti explícitament a través del banner o del gestor de preferències.</p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">04</span> Gestió del consentiment</h2>
+            <p>Podeu acceptar, rebutjar o personalitzar les vostres preferències en qualsevol moment. Les cookies tècniques no es poden desactivar ja que són necessàries per al funcionament del lloc.</p>
+            <div class="prefs-panel">
+                <h3>Gestor de preferències de cookies</h3>
+                <div class="pref-item">
+                    <div class="pref-info">
+                        <h4>Cookies tècniques (necessàries)</h4>
+                        <p>Indispensables per al funcionament bàsic del lloc web. No es poden desactivar.</p>
+                    </div>
+                    <label class="toggle"><input type="checkbox" checked disabled><span class="slider"></span></label>
+                </div>
+                <div class="pref-item">
+                    <div class="pref-info">
+                        <h4>Cookies analítiques</h4>
+                        <p>Ens ajuden a entendre com s'utilitza el lloc web per millorar-lo (Statcounter, Google Analytics).</p>
+                    </div>
+                    <label class="toggle"><input type="checkbox" id="pref-analytics"><span class="slider"></span></label>
+                </div>
+                <div class="prefs-actions">
+                    <button class="btn-pref btn-pref--accept" onclick="savePrefs(true)">Acceptar totes</button>
+                    <button class="btn-pref btn-pref--save" onclick="savePrefs(null)">Desar preferències</button>
+                    <button class="btn-pref btn-pref--reject" onclick="savePrefs(false)">Rebutjar opcionals</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">05</span> Com desactivar cookies al navegador</h2>
+            <p>A més del gestor anterior, podeu configurar el vostre navegador per bloquejar o eliminar les cookies:</p>
+            <ul>
+                <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+                <li><a href="https://support.mozilla.org/ca/kb/galetes-informacio-que-els-llocs-web-emmagatzemen" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+                <li><a href="https://support.apple.com/ca-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+                <li><a href="https://support.microsoft.com/ca-es/windows/eliminar-i-administrar-les-galetes-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener">Microsoft Edge</a></li>
+            </ul>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">06</span> Actualitzacions d'aquesta política</h2>
+            <p>FoodLogistic S.A. es reserva el dret d'actualitzar aquesta Política de Cookies per adaptar-la a canvis legislatius o tècnics. Us recomanem revisar-la periòdicament. Els canvis significatius es comunicaran a través del lloc web.</p>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 FoodLogistic S.A. Tots els drets reservats.</span>
+            <div class="footer-legal">
+                <a href="index.html">Inici</a>
+                <a href="avis-legal.html">Avís Legal</a>
+                <a href="politica-privacitat.html">Política de Privacitat</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function savePrefs(acceptAll) {
+            const analytics = document.getElementById('pref-analytics');
+            if (acceptAll === true) analytics.checked = true;
+            if (acceptAll === false) analytics.checked = false;
+            localStorage.setItem('fl_cookie_consent', JSON.stringify({ choice: acceptAll === true ? 'accept' : (acceptAll === false ? 'reject' : 'custom'), analytics: analytics.checked, ts: Date.now() }));
+            const msg = document.createElement('div');
+            msg.style.cssText = 'position:fixed;bottom:2rem;right:2rem;background:#22c55e;color:#000;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;font-size:0.875rem;z-index:9999;';
+            msg.textContent = 'Preferències de cookies desades correctament.';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+        const saved = localStorage.getItem('fl_cookie_consent');
+        if (saved) {
+            try { document.getElementById('pref-analytics').checked = !!JSON.parse(saved).analytics; } catch(e) {}
+        }
+    </script>
+</body>
+</html>
